@@ -5,6 +5,37 @@
 #include <stdio.h>
 #include <windows.h>
 
+#define KNRM  "\x1b[0m"
+#define KYLW  "\x1b[33m"
+#define KBLK  "\x1B[90m"
+
+
+void center_text(char* output, char* text, int width) {
+    int len = strlen(text);
+    
+    if (len > width) {
+        strncpy(output, text, width);
+        output[width] = '\0';
+        return;
+    }
+
+    int left = (width - len) / 2;
+    int right = width - len - left;
+
+    int pos = 0;
+    for (int i = 0; i < left; i++) {
+        output[pos++] = ' ';
+    }
+    for (int i = 0; i < len; i++) {
+        output[pos++] = text[i];
+    }
+    for (int i = 0; i < right; i++) {
+        output[pos++] = ' ';
+    }
+    output[pos] = '\0';
+}
+
+
 
 void login_screen() {
     int choice;
@@ -169,16 +200,22 @@ void catalog_menu() {
         Film* left = current->prev;
         Film* right = current->next;
 
-    printf("╔════════════════════════════════════════════╗  ╔════════════════════════════════════════════╗  ╔════════════════════════════════════════════╗\n");
-    printf("║                                            ║  ║                                            ║  ║                                            ║\n");
-    printf("║                                            ║  ║                                            ║  ║                                            ║\n");
-    printf("║                                            ║  ║                                            ║  ║                                            ║\n");
-    printf("║  %40s  ║  ║  %40s  ║  ║  %40s  ║\n", left->name, current->name, right->name);
-    printf("║                  ★ %2.1f ★                  ║  ║                  ★ %2.1f ★                  ║  ║                  ★ %2.1f ★                  ║\n", left->rating, current->rating, right->rating);
-    printf("║                                            ║  ║                                            ║  ║                                            ║\n");
-    printf("║                                            ║  ║                                            ║  ║                                            ║\n");
-    printf("║                                            ║  ║                                            ║  ║                                            ║\n");
-    printf("╚════════════════════════════════════════════╝  ╚════════════════════════════════════════════╝  ╚════════════════════════════════════════════╝\n\n");
+        char leftname[45], centername[45], rightname[45];
+
+        center_text(leftname, left->name, 44);
+        center_text(centername, current->name, 44);
+        center_text(rightname, right->name, 44);
+
+    printf("%s╔════════════════════════════════════════════╗%s  %s╔════════════════════════════════════════════╗%s  %s╔════════════════════════════════════════════╗%s\n", KBLK, KNRM, KYLW, KNRM, KBLK, KNRM);
+    printf("%s║                                            ║%s  %s║                                            ║%s  %s║                                            ║%s\n", KBLK, KNRM, KYLW, KNRM, KBLK, KNRM);
+    printf("%s║                                            ║%s  %s║                                            ║%s  %s║                                            ║%s\n", KBLK, KNRM, KYLW, KNRM, KBLK, KNRM);
+    printf("%s║                                            ║%s  %s║                                            ║%s  %s║                                            ║%s\n", KBLK, KNRM, KYLW, KNRM, KBLK, KNRM);
+    printf("%s║%s║%s  %s║%s║%s  %s║%s║%s\n", KBLK, leftname, KNRM, KYLW, centername, KNRM, KBLK, rightname, KNRM);
+    printf("%s║                  ★ %4.1f ★                  ║%s  %s║                  ★ %4.1f ★                  ║%s  %s║                  ★ %4.1f ★                  ║%s\n", KBLK, left->rating, KNRM, KYLW, current->rating, KNRM, KBLK, right->rating, KNRM);
+    printf("%s║                                            ║%s  %s║                                            ║%s  %s║                                            ║%s\n", KBLK, KNRM, KYLW, KNRM, KBLK, KNRM);
+    printf("%s║                                            ║%s  %s║                                            ║%s  %s║                                            ║%s\n", KBLK, KNRM, KYLW, KNRM, KBLK, KNRM);
+    printf("%s║                                            ║%s  %s║                                            ║%s  %s║                                            ║%s\n", KBLK, KNRM, KYLW, KNRM, KBLK, KNRM);
+    printf("%s╚════════════════════════════════════════════╝%s  %s╚════════════════════════════════════════════╝%s  %s╚════════════════════════════════════════════╝%s\n\n"), KBLK, KNRM, KYLW, KNRM, KBLK, KNRM;
 
     printf("\n1. ← Влево\n");
     printf("2. → Вправо\n");
@@ -246,8 +283,8 @@ void favorites_menu() {
     printf("║                                            ║  ║                                            ║  ║                                            ║\n");
     printf("║                                            ║  ║                                            ║  ║                                            ║\n");
     printf("║                                            ║  ║                                            ║  ║                                            ║\n");
-    printf("║  %40s  ║  ║  %40s  ║  ║  %40s  ║\n", left->name, current->name, right->name);
-    printf("║                  ★ %2f ★                  ║  ║                  ★ %2f ★                  ║  ║                  ★ %2xf ★                  ║\n", left->rating, current->rating, right->rating);
+    printf("║%44s║  ║%44s║  ║%44s║\n", left->name, current->name, right->name);
+    printf("║                  ★ %2.1f ★                  ║  ║                  ★ %2.1f ★                  ║  ║                  ★ %2.1f ★                  ║\n", left->rating, current->rating, right->rating);
     printf("║                                            ║  ║                                            ║  ║                                            ║\n");
     printf("║                                            ║  ║                                            ║  ║                                            ║\n");
     printf("║                                            ║  ║                                            ║  ║                                            ║\n");

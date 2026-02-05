@@ -18,5 +18,6 @@ void register_screen();
 void view_film_details(Film* film, int is_catalog);
 void add_film_admin();
 void delete_film_admin(Film* film);
+void center_text(char* output, char* text, int width);
 
 #endif

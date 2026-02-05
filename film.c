@@ -196,5 +196,5 @@ void print_details(Film* film) {
     printf("Год: %d\n", film->year);
     printf("Страна: %s\n", film->country);
     printf("Жанр: %s\n", film->genre);
-    printf("Рейтинг: %f\n", film->rating);
+    printf("Рейтинг: %.1f\n", film->rating);
 }
