@@ -18,11 +18,14 @@ int is_favorite(Film* head, char* name) {
 }
 
 Film* add_to_favorites(Film* head, Film* film) {
+    Film* newFilm = create_film(film->name, film->year, film->country, film->genre, film->rating);
+    if (head == NULL) {
+        return newFilm;
+    }
+    printf("%s %s", film->name, head->name);
     if (is_favorite(head, film->name)) {
         return head;
     }
-
-    Film* newFilm = create_film(film->name, film->year, film->country, film->genre, film->rating);
 
     return add_to_list(head, newFilm);
 }
